@@ -67,7 +67,7 @@ def test_web_table_form():
     browser.element("#department").type("Seven")
     browser.element("#submit").press_enter()
 
-#chek added
+#check adding record
 
     browser.all(".rt-tbody").should(have.text('Unknown'))
     browser.all(".rt-tbody").should(have.text('Last'))
@@ -90,7 +90,7 @@ def test_web_table_form():
 
 
 
-#chek edit
+#check edit record
     browser.all(".rt-tbody").should(have.text('Mr'))
     browser.all(".rt-tbody").should(have.text('Anderson'))
     browser.all(".rt-tbody").should(have.text('matrix@hasyou.net'))
@@ -102,5 +102,5 @@ def test_web_table_form():
 
     browser.element("#delete-record-3").click()
 
-#chek delete
+#check delete record
 
