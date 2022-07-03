@@ -2,6 +2,8 @@ from selene import have
 from selene.core import command
 from selene.support.shared import browser
 
+from demoqa_tests.tools import resources
+
 
 def test_registration_form():
     browser.open("automation-practice-form")
@@ -21,7 +23,7 @@ def test_registration_form():
     browser.element(".react-datepicker__year-select").type("2006")
     browser.element("[aria-label= 'Choose Saturday, September 16th, 2006']").click()
 
-    browser.element("#uploadPicture").type("D:\Prog\Python\Project\guqa_dz_04_selene\e7c772fd52841b814819c58037df730d.jpeg")
+    browser.element("#uploadPicture").send_keys(resources('screen.png'))
 
     browser.element("#subjectsInput").type("History").press_enter().type("English").press_enter()
 
@@ -45,34 +47,60 @@ def test_registration_form():
         'Date of Birth 16 September,2006',
         'Subjects History, English',
         'Hobbies Reading',
-        'Picture e7c772fd52841b814819c58037df730d.jpeg',
+        'Picture screen.png',
         'Address Russia Ekb. Lenina str. 1919 9191',
         'State and City NCR Gurgaon'
     ))
 
-    browser.element("#closeLargeModal").press_enter()
+    browser.element("#closeLargeModal").click()
+
 
 def test_web_table_form():
     browser.open("webtables")
 # added new record no.4
     browser.element("#addNewRecordButton").press_enter()
     browser.element("#firstName").type("Unknown")
-    browser.element("#lastName").type("Unknown")
+    browser.element("#lastName").type("Last")
     browser.element("#userEmail").type("dsfgdfg@gmail.com")
     browser.element("#age").type("18")
     browser.element("#salary").type("40000").press_enter()
     browser.element("#department").type("Seven")
     browser.element("#submit").press_enter()
 
+#chek added
+
+    browser.all(".rt-tbody").should(have.text('Unknown'))
+    browser.all(".rt-tbody").should(have.text('Last'))
+    browser.all(".rt-tbody").should(have.text('dsfgdfg@gmail.com'))
+    browser.all(".rt-tbody").should(have.text('18'))
+    browser.all(".rt-tbody").should(have.text('40000'))
+    browser.all(".rt-tbody").should(have.text('Seven'))
+
+
 # edit record no.2
+
     browser.element("#edit-record-2").click()
     browser.element("#firstName").clear().type("Mr")
     browser.element("#lastName").clear().type("Anderson")
     browser.element("#userEmail").set_value("matrix@hasyou.net")
-    browser.element("#age").type("81")
+    browser.element("#age").clear().type("81")
     browser.element("#salary").clear().type("00004")
     browser.element("#department").clear().type("seVen")
     browser.element("#submit").press_enter()
 
+
+
+#chek edit
+    browser.all(".rt-tbody").should(have.text('Mr'))
+    browser.all(".rt-tbody").should(have.text('Anderson'))
+    browser.all(".rt-tbody").should(have.text('matrix@hasyou.net'))
+    browser.all(".rt-tbody").should(have.text('81'))
+    browser.all(".rt-tbody").should(have.text('00004'))
+    browser.all(".rt-tbody").should(have.text('seVen'))
+
 # delete record no.3
+
     browser.element("#delete-record-3").click()
+
+#chek delete
+
