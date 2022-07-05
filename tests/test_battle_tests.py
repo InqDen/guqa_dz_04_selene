@@ -3,6 +3,9 @@ from selene.core import command
 from selene.support.shared import browser
 
 from demoqa_tests.tools import resources
+from demoqa_tests.controls import  select
+
+
 
 
 def test_registration_form():
@@ -35,8 +38,44 @@ def test_registration_form():
     browser.element("#state input").type("NCR").press_tab()
     browser.element("#city input").type("Gurgaon").press_tab()
 
+    '''
+    почему то не работает =(
+    class student():
+        state = "NCR"
+        city = "Gurgaon"
+
+    browser.element("#state").perform(command.js.scroll_into_view).click()
+    def select_dropdown(selector, option):
+        browser.element(selector).click()
+        browser.element('[id^=[react-select][id*=option]').element_by(have.exact_text(option)).click()
+
+    select_dropdown('#stae', option=student.state)
+    select_dropdown('#city',option=student.city)
+    browser.element('#city').click()
+    browser.element('#react-select-4-option-1').click()
+    '''
+
+    '''
+    browser.element('#state').element('input').type("NCR").press_tab()
+    browser.element('#city').element('input').type("Gurgaon").press_tab()
+    '''
+
+
+
+
+    ''' 
+    # не работает
+    select.select_by_choosing(browser.element('#state'), option='NCR')
+    select.select_by_choosing(browser.element('#city'), option='Gurgaon')
+    '''
+
+
+
+
+
     browser.element('footer')._execute_script('element.style.display = "None"')
     browser.element("#submit").press_enter()
+
 
 # check
     browser.all("tbody tr").should(have.texts(
@@ -103,4 +142,7 @@ def test_web_table_form():
     browser.element("#delete-record-3").click()
 
 #check delete record
+'''
+пока не придумал проверку удаления
+'''
 
