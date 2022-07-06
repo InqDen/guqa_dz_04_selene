@@ -17,7 +17,12 @@ def test_registration_form():
 
     browser.element("#userEmail").type("dsfgdfg@gmail.com")
 
-    browser.all(".custom-radio").element_by(have.exact_text("Other")).click()
+
+    class gender():
+        male = 'Male'
+        female = 'Female'
+        other = 'Other'
+    browser.all(".custom-radio").element_by(have.exact_text(gender.other)).click()
 
     browser.element("#userNumber").type("1659865123")
 
@@ -32,42 +37,22 @@ def test_registration_form():
 
     browser.element("#currentAddress").type("Russia Ekb. Lenina str. 1919 9191")
 
-    browser.all(".custom-checkbox").element_by(have.exact_text("Reading")).click()
 
+    class hobbies():
+        sports = 'Sports'
+        reading = 'Reading'
+        music = 'Music'
+    browser.all(".custom-checkbox").element_by(have.exact_text(hobbies.reading)).click()
+
+
+    '''
     browser.element("#state").perform(command.js.scroll_into_view).click()
     browser.element("#state input").type("NCR").press_tab()
     browser.element("#city input").type("Gurgaon").press_tab()
-
     '''
-    почему то не работает =(
-    class student():
-        state = "NCR"
-        city = "Gurgaon"
-
-    browser.element("#state").perform(command.js.scroll_into_view).click()
-    def select_dropdown(selector, option):
-        browser.element(selector).click()
-        browser.element('[id^=[react-select][id*=option]').element_by(have.exact_text(option)).click()
-
-    select_dropdown('#stae', option=student.state)
-    select_dropdown('#city',option=student.city)
-    browser.element('#city').click()
-    browser.element('#react-select-4-option-1').click()
-    '''
-
-    '''
-    browser.element('#state').element('input').type("NCR").press_tab()
-    browser.element('#city').element('input').type("Gurgaon").press_tab()
-    '''
-
-
-
-
-    ''' 
-    # не работает
     select.select_by_choosing(browser.element('#state'), option='NCR')
     select.select_by_choosing(browser.element('#city'), option='Gurgaon')
-    '''
+
 
 
 
