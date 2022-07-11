@@ -1,10 +1,10 @@
 from selene import have
-from selene.core import command
-from selene.core.entity import SeleneElement
 from selene.support.shared import browser
 
+from demoqa_tests.controls import tags_input
 from demoqa_tests.tools import resources
-from demoqa_tests.controls import select
+from demoqa_tests.controls import dropdown
+from demoqa_tests.controls import modal_content
 
 
 def test_registration_form():
@@ -52,9 +52,12 @@ def test_registration_form():
 
     # autocomlite("#subjectsInput", from= )
 
-    browser.element("#subjectsInput").type("History").press_enter().type("English").press_enter()
+    subjacts = browser.element('#subjectsInput')
+    tags_input.add(subjacts, from_='History', to='Chemistry')
+    tags_input.add(subjacts, from_='Maths')
 
-    browser.element("#currentAddress").type(Student.currentAdress)
+    # browser.element("#subjectsInput").type("History").press_enter().type("English").press_enter()
+    # browser.element("#currentAddress").type(Student.currentAdress)
 
     class Hobbies:
         sports = 'Sports'
@@ -68,13 +71,14 @@ def test_registration_form():
     browser.element("#state input").type("NCR").press_tab()
     browser.element("#city input").type("Gurgaon").press_tab()
     '''
-    select.select_by_choosing(browser.element('#state'), option='NCR')
-    select.select_by_choosing(browser.element('#city'), option='Gurgaon')
+    dropdown.select(browser.element('#state'), option='NCR')
+    dropdown.select(browser.element('#city'), option='Gurgaon')
 
     browser.element('footer')._execute_script('element.style.display = "None"')
     browser.element("#submit").press_enter()
 
     # check
+
     browser.all("tbody tr").should(have.texts(
         'Student Name Unknown Unknown',
         'Student Email dsfgdfg@gmail.com',
@@ -142,8 +146,8 @@ def test_web_table_form():
 
     browser.element('#searchBox').type('Target')
     browser.all(".rt-tbody").should(have.text('Target'))
-    #browser.element('#searchBox').type('Kierra')
-    #browser.all(".rt-tbody").should(have.text('Kierra'))
+    # browser.element('#searchBox').type('Kierra')
+    # browser.all(".rt-tbody").should(have.text('Kierra'))
 
     # delete record no.3
 
@@ -152,4 +156,4 @@ def test_web_table_form():
     # check delete record
     browser.all(".rt-tbody").should_not(have.text('Target'))
 
-    #browser.all(".rt-tbody").should_not(have.text('Kierra'))
+    # browser.all(".rt-tbody").should_not(have.text('Kierra'))
