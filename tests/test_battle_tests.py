@@ -1,7 +1,10 @@
+from typing import Optional
+
 from selene import have
+from selene.core.entity import Element
 from selene.support.shared import browser
 
-from demoqa_tests.controls import tags_input
+# from demoqa_tests.controls import tags_input
 from demoqa_tests.tools import resources
 from demoqa_tests.controls import dropdown
 from demoqa_tests.controls import modal_content
@@ -50,11 +53,23 @@ def test_registration_form():
     '''
     browser.element("#uploadPicture").send_keys(resources('screen.png'))
 
-    # autocomlite("#subjectsInput", from= )
+    class TagsInput:
+        def __init__(self):
+            self.element: Element = ...
 
-    subjacts = browser.element('#subjectsInput')
-    tags_input.add(subjacts, from_='History', to='Chemistry')
-    tags_input.add(subjacts, from_='Maths')
+        def add(self, from_: str, /, *, autocomlete: Optional[str] = None):
+            self.type(from_)
+            browser.all(
+                '.subjects-auto-complete__control'
+            ).element_by(have.text(autocomlete or from_)).click()
+
+
+
+    # autocomlite("#subjectsInput", from= )
+    tags_input = TagsInput
+    tags_input.element = browser.element('#subjectsInput')
+    tags_input.add('His', autocomlete='History')
+    tags_input.add('Maths')
 
     # browser.element("#subjectsInput").type("History").press_enter().type("English").press_enter()
     # browser.element("#currentAddress").type(Student.currentAdress)
@@ -64,6 +79,8 @@ def test_registration_form():
         reading = 'Reading'
         music = 'Music'
 
+    tags_input2 = TagsInput()
+    tags_input2.element = browser.element('#hobbiesInput')
     browser.all(".custom-checkbox").element_by(have.exact_text(Hobbies.reading)).click()
 
     '''
@@ -78,7 +95,6 @@ def test_registration_form():
     browser.element("#submit").press_enter()
 
     # check
-
     browser.all("tbody tr").should(have.texts(
         'Student Name Unknown Unknown',
         'Student Email dsfgdfg@gmail.com',
@@ -93,67 +109,3 @@ def test_registration_form():
     ))
 
     browser.element("#closeLargeModal").click()
-
-
-def test_web_table_form():
-    browser.open("webtables")
-    # browser.element('footer')._execute_script('element.style.display = "None"')
-    # browser.all('[class^= select-wrap]')
-
-    # added new record no.4
-    browser.element("#addNewRecordButton").press_enter()
-    browser.element("#firstName").type("Unknown")
-    browser.element("#lastName").type("Last")
-    browser.element("#userEmail").type("dsfgdfg@gmail.com")
-    browser.element("#age").type("18")
-    browser.element("#salary").type("40000").press_enter()
-    browser.element("#department").type("Seven")
-    browser.element("#submit").press_enter()
-
-    # check adding record
-
-    browser.all(".rt-tbody").should(have.text('Unknown'))
-    browser.all(".rt-tbody").should(have.text('Last'))
-    browser.all(".rt-tbody").should(have.text('dsfgdfg@gmail.com'))
-    browser.all(".rt-tbody").should(have.text('18'))
-    browser.all(".rt-tbody").should(have.text('40000'))
-    browser.all(".rt-tbody").should(have.text('Seven'))
-
-    # edit record no.2
-
-    browser.element("#edit-record-2").click()
-    browser.element("#firstName").clear().type("Mr")
-    browser.element("#lastName").clear().type("Anderson")
-    browser.element("#userEmail").set_value("matrix@hasyou.net")
-    browser.element("#age").clear().type("81")
-    browser.element("#salary").clear().type("00004")
-    browser.element("#department").clear().type("seVen")
-    browser.element("#submit").press_enter()
-
-    # check edit record
-    browser.all(".rt-tbody").should(have.text('Mr'))
-    browser.all(".rt-tbody").should(have.text('Anderson'))
-    browser.all(".rt-tbody").should(have.text('matrix@hasyou.net'))
-    browser.all(".rt-tbody").should(have.text('81'))
-    browser.all(".rt-tbody").should(have.text('00004'))
-    browser.all(".rt-tbody").should(have.text('seVen'))
-
-    # check record no.3 and rename
-
-    browser.element("#edit-record-3").click()
-    browser.element("#firstName").type('Target')
-    browser.element("#submit").press_enter()
-
-    browser.element('#searchBox').type('Target')
-    browser.all(".rt-tbody").should(have.text('Target'))
-    # browser.element('#searchBox').type('Kierra')
-    # browser.all(".rt-tbody").should(have.text('Kierra'))
-
-    # delete record no.3
-
-    browser.element("#delete-record-3").click()
-
-    # check delete record
-    browser.all(".rt-tbody").should_not(have.text('Target'))
-
-    # browser.all(".rt-tbody").should_not(have.text('Kierra'))
