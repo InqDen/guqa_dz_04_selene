@@ -1,10 +1,10 @@
 from selene import have
-from selene.core import command
-from selene.core.entity import SeleneElement
 from selene.support.shared import browser
-
+from demoqa_tests.controls.date_picker import DatePicker, Month
+from demoqa_tests.controls.table import Table
+from demoqa_tests.controls.tags_input import TagsInput
 from demoqa_tests.tools import resources
-from demoqa_tests.controls import select
+from demoqa_tests.controls import dropdown
 
 
 def test_registration_form():
@@ -37,11 +37,18 @@ def test_registration_form():
     browser.all(".custom-radio").element_by(have.exact_text(Gender.other)).click()
 
     browser.element("#userNumber").type("1659865123")
-
+    '''
     browser.element("#dateOfBirth-wrapper").click()
     browser.element(".react-datepicker__month-select").type(Student.birthMonthName)
     browser.element(".react-datepicker__year-select").type(Student.birthYear)
     browser.element("[aria-label= 'Choose Saturday, September 16th, 2006']").click()
+    '''
+
+    calendar = '#dateOfBirthInput'
+    browser.element(calendar).click()
+    date_of_birth = DatePicker(browser.element('#dateOfBirth'))
+    date_of_birth.select_year(2006).select_month(Month.September).select_day(16)
+
     '''
     browser.element('#dateOfBirthInput').click()
     browser.element('.react-datepicker__year-select').element(f'[value="{Student.birthYear}"]').click()
@@ -50,9 +57,14 @@ def test_registration_form():
     '''
     browser.element("#uploadPicture").send_keys(resources('screen.png'))
 
-    # autocomlite("#subjectsInput", from= )
-
-    browser.element("#subjectsInput").type("History").press_enter().type("English").press_enter()
+    '''
+    subjacts = browser.element('#subjectsInput')
+    tags_input.add(subjacts, from_='History', to='Chemistry')
+    tags_input.add(subjacts, from_='Maths')
+    '''
+    subjects = TagsInput(browser.element('#subjectsInput'))
+    subjects.add('History')
+    subjects.add('Chem', autocomplete='Chemistry')
 
     browser.element("#currentAddress").type(Student.currentAdress)
 
@@ -68,13 +80,14 @@ def test_registration_form():
     browser.element("#state input").type("NCR").press_tab()
     browser.element("#city input").type("Gurgaon").press_tab()
     '''
-    select.select_by_choosing(browser.element('#state'), option='NCR')
-    select.select_by_choosing(browser.element('#city'), option='Gurgaon')
+    dropdown.select(browser.element('#state'), option='NCR')
+    dropdown.select(browser.element('#city'), option='Gurgaon')
 
     browser.element('footer')._execute_script('element.style.display = "None"')
     browser.element("#submit").press_enter()
 
     # check
+    '''
     browser.all("tbody tr").should(have.texts(
         'Student Name Unknown Unknown',
         'Student Email dsfgdfg@gmail.com',
@@ -87,6 +100,19 @@ def test_registration_form():
         'Address Russia Ekb. Lenina str. 1919 9191',
         'State and City NCR Gurgaon'
     ))
+    '''
+    modal_window = browser.element('.modal-content')
+    result_table = Table(modal_window.element('.table'))
+    result_table.path_to_cell(row=1, column=2).should(have.exact_text('Unknown Unknown'))
+    result_table.path_to_cell(row=2, column=2).should(have.exact_text('dsfgdfg@gmail.com'))
+    result_table.path_to_cell(row=3, column=2).should(have.exact_text('Other'))
+    result_table.path_to_cell(row=4, column=2).should(have.exact_text('1659865123'))
+    result_table.path_to_cell(row=5, column=2).should(have.exact_text('16 September,2006'))
+    result_table.path_to_cell(row=6, column=2).should(have.exact_text('History, Chemistry'))
+    result_table.path_to_cell(row=7, column=2).should(have.exact_text('Reading'))
+    result_table.path_to_cell(row=8, column=2).should(have.exact_text('screen.png'))
+    result_table.path_to_cell(row=9, column=2).should(have.exact_text('Russia Ekb. Lenina str. 1919 9191'))
+    result_table.path_to_cell(row=10, column=2).should(have.exact_text('NCR Gurgaon'))
 
     browser.element("#closeLargeModal").click()
 
@@ -142,8 +168,8 @@ def test_web_table_form():
 
     browser.element('#searchBox').type('Target')
     browser.all(".rt-tbody").should(have.text('Target'))
-    #browser.element('#searchBox').type('Kierra')
-    #browser.all(".rt-tbody").should(have.text('Kierra'))
+    # browser.element('#searchBox').type('Kierra')
+    # browser.all(".rt-tbody").should(have.text('Kierra'))
 
     # delete record no.3
 
@@ -152,4 +178,4 @@ def test_web_table_form():
     # check delete record
     browser.all(".rt-tbody").should_not(have.text('Target'))
 
-    #browser.all(".rt-tbody").should_not(have.text('Kierra'))
+    # browser.all(".rt-tbody").should_not(have.text('Kierra'))
