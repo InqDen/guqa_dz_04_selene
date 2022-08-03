@@ -5,6 +5,7 @@ from demoqa_tests.controls.table import Table
 from demoqa_tests.controls.tags_input import TagsInput
 from demoqa_tests.tools import resources
 from demoqa_tests.controls import dropdown
+from demoqa_tests.pages.pages_form import StudentRegistrationForm
 
 
 def test_registration_form():
@@ -23,11 +24,15 @@ def test_registration_form():
         state = 'NCR'
         city = 'Gurgaon'
 
-    # fill out
-    browser.element("#firstName").type(Student.name)
-    browser.element("#lastName").type(Student.surname)
+    form = StudentRegistrationForm
 
-    browser.element("#userEmail").type(Student.email)
+    form.set_first_name('Alala').set_first_name(Student.surname).set_mail(Student.email)
+    form.set_mail().set_first_name().set_last_name()
+    form.set_last_name()
+    # fill out
+    #browser.element("#firstName").type(Student.name)
+    #browser.element("#lastName").type(Student.surname)
+    #browser.element("#userEmail").type(Student.email)
 
     class Gender:
         male = 'Male'
@@ -37,7 +42,6 @@ def test_registration_form():
     browser.all(".custom-radio").element_by(have.exact_text(Gender.other)).click()
 
     browser.element("#userNumber").type("1659865123")
-
 
     calendar = '#dateOfBirthInput'
     browser.element(calendar).click()
@@ -58,7 +62,6 @@ def test_registration_form():
         music = 'Music'
 
     browser.all(".custom-checkbox").element_by(have.exact_text(Hobbies.reading)).click()
-
 
     dropdown.select(browser.element('#state'), option='NCR')
     dropdown.select(browser.element('#city'), option='Gurgaon')
@@ -82,5 +85,3 @@ def test_registration_form():
     result_table.path_to_cell(row=10, column=2).should(have.exact_text('NCR Gurgaon'))
 
     browser.element("#closeLargeModal").click()
-
-
