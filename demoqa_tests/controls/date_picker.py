@@ -40,3 +40,10 @@ class Month(Enum):
     October = 9
     November = 10
     December = 11
+
+'''
+calendar = '#dateOfBirthInput'
+    browser.element(calendar).click()
+    date_of_birth = DatePicker(browser.element('#dateOfBirth'))
+    date_of_birth.select_year(2006).select_month(Month.September).select_day(16)
+'''
