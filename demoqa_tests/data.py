@@ -7,6 +7,8 @@ class Student:
     birth_month = '8'
     birth_month_name = 'September'
     birth_year = '2006'
+    birthday_day ='16 September,2006'
+    picture = 'screen.png'
     current_adress = 'Russia Ekb. Lenina str. 1919 9191'
     state = 'NCR'
     city = 'Gurgaon'
@@ -16,6 +18,7 @@ class Gender:
     male = 'Male'
     female = 'Female'
     other = 'Other'
+
 
 class Subjects:
     arts = 'Arts'
@@ -32,6 +35,7 @@ class Subjects:
     maths = 'Maths'
     physics = 'Physics'
     social_studies = 'Social Studies'
+
 
 class Hobbies:
     sports = 'Sports'

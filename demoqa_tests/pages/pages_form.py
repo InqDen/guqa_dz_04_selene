@@ -1,9 +1,6 @@
 from selene.support.shared import browser
 from selene import have, by
-from selene.support.shared.jquery_style import s, ss
 from selene import command
-
-from demoqa_tests.controls.date_picker import DatePicker
 from demoqa_tests.tools import resources
 
 
@@ -26,10 +23,9 @@ class StudentRegistrationForm:
         return self
 
     def ser_gender(self, value):
-        #browser.element('#genderWrapper').all('.custom-radio').element_by(have.exact_text(value)).click()
+        # browser.element('#genderWrapper').all('.custom-radio').element_by(have.exact_text(value)).click()
         browser.all(".custom-radio").element_by(have.exact_text(value)).click()
         return self
-
 
     def set_birth_data(self, year: str, month: int, day: 'str'):
         browser.element('#dateOfBirthInput').click()
@@ -65,5 +61,10 @@ class StudentRegistrationForm:
         return self
 
     def submit(self):
-        browser.element('#submit').perform(command.js.click)
+        browser.element('footer')._execute_script('element.style.display = "None"')
+        browser.element("#submit").press_enter()
 
+        '''
+            def submit(self):
+        browser.element('#submit').perform(command.js.click)
+        '''
