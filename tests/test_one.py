@@ -9,20 +9,6 @@ from utils import attach
 
 @allure.step('Open registration form')
 def test_registration_form():
-    capabilities = {
-        "browserName": "chrome",
-        "browserVersion": "99.0",
-        "selenoid:options": {
-            "enableVNC": True,
-            "enableVideo": True
-        }
-    }
-
-    driver = webdriver.Remote(
-        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
-        desired_capabilities=capabilities)
-    browser.config.driver = driver
-
     browser.open('https://demoqa.com/automation-practice-form')
 
     with allure.step('Fill form'):
