@@ -14,7 +14,7 @@ def test_registration_form():
         "browserVersion": "99.0",
         "selenoid:options": {
             "enableVNC": True,
-            "enableVideo": False
+            "enableVideo": True
         }
     }
 
