@@ -1,5 +1,4 @@
 import allure
-from selenium import webdriver
 from selene.support.shared import browser
 from demoqa_tests.controls.table import Table
 from demoqa_tests.data import Student, Hobbies, Gender, Subjects
@@ -9,6 +8,7 @@ from utils import attach
 
 @allure.step('Open registration form')
 def test_registration_form():
+
     browser.open('https://demoqa.com/automation-practice-form')
 
     with allure.step('Fill form'):
