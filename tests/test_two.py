@@ -16,7 +16,6 @@ def test_web_table_form():
         browser.element("#department").type("Seven")
         browser.element("#submit").press_enter()
 
-
     with allure.step('Check adding record'):
         browser.all(".rt-tbody").should(have.text('Unknown'))
         browser.all(".rt-tbody").should(have.text('Last'))
@@ -24,7 +23,6 @@ def test_web_table_form():
         browser.all(".rt-tbody").should(have.text('18'))
         browser.all(".rt-tbody").should(have.text('40000'))
         browser.all(".rt-tbody").should(have.text('Seven'))
-
 
     with allure.step('Edit record no.2'):
         browser.element("#edit-record-2").click()
@@ -36,7 +34,6 @@ def test_web_table_form():
         browser.element("#department").clear().type("seVen")
         browser.element("#submit").press_enter()
 
-
     with allure.step('Check edit record'):
         browser.all(".rt-tbody").should(have.text('Mr'))
         browser.all(".rt-tbody").should(have.text('Anderson'))
@@ -45,7 +42,6 @@ def test_web_table_form():
         browser.all(".rt-tbody").should(have.text('00004'))
         browser.all(".rt-tbody").should(have.text('seVen'))
 
-
     with allure.step('Check record no.3 and rename'):
         browser.element("#edit-record-3").click()
         browser.element("#firstName").type('Target')
@@ -53,12 +49,8 @@ def test_web_table_form():
         browser.element('#searchBox').type('Target')
         browser.all(".rt-tbody").should(have.text('Target'))
 
-
-
     with allure.step('Delete record no.3'):
         browser.element("#delete-record-3").click()
 
-
     with allure.step('Check delete record'):
         browser.all(".rt-tbody").should_not(have.text('Target'))
-
