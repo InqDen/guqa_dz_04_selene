@@ -2,9 +2,8 @@ import os
 import pytest
 from selenium import webdriver
 from selene.support.shared import browser
-from selene import Browser, Config
 from utils import attach
-from selenium.webdriver.chrome.options import Options
+
 
 
 def pytest_addoption(parser):
@@ -34,34 +33,10 @@ def browser_management(request):
         desired_capabilities=capabilities)
 
     browser.config.driver = driver
-
-
-''' 
-#вообще не ясно почему не реагирует
-@pytest.fixture(scope='function')
-def setup_chrome():
-    options = Options()
-    selenoid_carabilities = {
-        'browserName': 'chrome',
-        'browserVersion': '100.0',
-        'selenoid:options': {
-            'enableVNC': True,
-            'enableVideo': True
-        }
-    }
-    options.capabilities.update(selenoid_carabilities)
-
-    login = os.getenv('LOGIN')
-    password = os.getenv('PASSWORD')
-    driver = webdriver.Remote(
-        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
-        options=options
-    )
-    browser = Browser(Config(driver))
-
     yield browser
     attach.add_log(browser)
     attach.add_html(browser)
     attach.add_screenshot(browser)
     attach.add_video(browser)
-'''
+    browser.quit()
+
