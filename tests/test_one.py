@@ -3,12 +3,11 @@ from selene.support.shared import browser
 from demoqa_tests.controls.table import Table
 from demoqa_tests.data import Student, Hobbies, Gender, Subjects
 from demoqa_tests.pages.pages_form import StudentRegistrationForm
-from utils import attach
+
 
 
 @allure.step('Open registration form')
 def test_registration_form():
-
     browser.open('https://demoqa.com/automation-practice-form')
 
     with allure.step('Fill form'):
@@ -48,7 +47,3 @@ def test_registration_form():
 
     browser.element("#closeLargeModal").click()
 
-    attach.add_log(browser)
-    attach.add_html(browser)
-    attach.add_screenshot(browser)
-    attach.add_video(browser)
