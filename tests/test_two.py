@@ -3,7 +3,7 @@ from selene.support.shared import browser
 
 
 def test_web_table_form():
-    browser.open("webtables")
+    browser.open("https://demoqa.com/webtables")
     # browser.element('footer')._execute_script('element.style.display = "None"')
     # browser.all('[class^= select-wrap]')
 
