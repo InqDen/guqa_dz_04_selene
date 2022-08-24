@@ -1,4 +1,5 @@
 import allure
+from selene.support.conditions import have
 from selene.support.shared import browser
 from demoqa_tests.controls.table import Table
 from demoqa_tests.data import Student, Hobbies, Gender, Subjects
@@ -9,7 +10,18 @@ from utils import attach
 @allure.step('Open registration form')
 def test_registration_form():
 
+
     browser.open('https://demoqa.com/automation-practice-form')
+
+
+    # browser = setup_chrome
+    '''
+    with allure.step('Open Registration Form'):
+        browser.open('https://demoqa.com/automation-practice-form')
+        browser.element('.practce-form-wrapper').should(have.text('Student Regidtration Form'))
+        browser.driver.execute_script("$('.footer').remove()")
+        browser.driver.execute_script("$('#fixban').remove()")
+    '''
 
     with allure.step('Fill form'):
         (StudentRegistrationForm()
