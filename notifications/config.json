@@ -1,0 +1,16 @@
+{
+  "base": {
+    "project": "some project",
+    "environment": "PROD",
+    "comment": "no comment",
+    "reportLink": "https://jenkins.autotests.cloud/job/01-InqDen-pyton_1_9_Jenkins/33/",
+    "language": "en",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "xxx-FR9BLv0zV26AIH688dZ25DaV_rLmA",
+    "chat": "-1001686010072",
+    "replyTo": ""
+  }
+}
