@@ -1,0 +1,9 @@
+token:  xxx-FR9BLv0zV26AIH688dZ25DaV_rLmA
+chat: -1001686010072
+
+curl -X POST \
+     -H 'Content-Type: application/json' \
+     -d '{"chat_id": "-1001686010072", "text": "This is a test from O_o", "disable_notification": true}' \
+     https://api.telegram.org/botxxx-FR9BLv0zV26AIH688dZ25DaV_rLmA/sendMessage
+
+java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.2.1.jar
